@@ -16,6 +16,11 @@ public final class Constants {
   public static final int SENSOR_STATUS_REMOVE_SENSOR = 1;
   public static final int SENSOR_STATUS_MOCK_VALUES = 2;
 
+  // Sensor data file configuration
+  public static final String SENSOR_DATA_DIRECTORY = "SensorDisabler";
+  public static final String SENSOR_DATA_FILE_NAME = "sensor_data.txt";
+  public static final String PREFS_KEY_USE_FILE_DATA = "prefs_key_use_file_data";
+
   private Constants() {
     throw new UnsupportedOperationException("This class is non-instantiable"); //$NON-NLS-1$
   }

@@ -1,0 +1,48 @@
+# Sensor Disabler - Custom Sensor Data File
+# 
+# This file allows you to define custom sensor values that will be used when mocking sensors.
+# 
+# FORMAT:
+# -------
+# SensorKey=value1:value2:value3
+#
+# - Lines starting with '#' are comments and will be ignored
+# - Empty lines are ignored
+# - SensorKey: The unique identifier for a sensor (see instructions below to get sensor keys)
+# - Values: Colon-separated float values that represent the mock sensor data
+#
+# HOW TO GET SENSOR KEYS:
+# ------------------------
+# Sensor keys are generated using the format:
+# SensorName|*^&SensorDisabler&^*|Vendor|*^&SensorDisabler&^*|Version|*^&SensorDisabler&^*|Type
+#
+# You can find sensor information in the Sensor Disabler app UI or Android logs.
+#
+# USAGE:
+# ------
+# 1. Copy this file to your device's storage at: /sdcard/SensorDisabler/sensor_data.txt
+# 2. Edit the file with your desired sensor configurations
+# 3. Enable "Use File Data" option in Sensor Disabler settings
+# 4. Reboot or restart the target application
+#
+# EXAMPLES:
+# ---------
+# The following are example entries. Replace them with your actual sensor keys and values.
+
+# Example: Accelerometer (3 values: x, y, z in m/s²)
+# Accelerometer Sensor|*^&SensorDisabler&^*|VendorName|*^&SensorDisabler&^*|1|*^&SensorDisabler&^*|1=0.0:0.0:9.8
+
+# Example: Proximity Sensor (1 value: distance in cm)
+# Proximity Sensor|*^&SensorDisabler&^*|VendorName|*^&SensorDisabler&^*|1|*^&SensorDisabler&^*|8=5.0
+
+# Example: Gyroscope (3 values: rotation rate around x, y, z in rad/s)
+# Gyroscope Sensor|*^&SensorDisabler&^*|VendorName|*^&SensorDisabler&^*|1|*^&SensorDisabler&^*|4=0.0:0.0:0.0
+
+# Example: Light Sensor (1 value: illuminance in lx)
+# Light Sensor|*^&SensorDisabler&^*|VendorName|*^&SensorDisabler&^*|1|*^&SensorDisabler&^*|5=100.0
+
+# Example: Magnetic Field (3 values: magnetic field strength in μT)
+# Magnetic Field Sensor|*^&SensorDisabler&^*|VendorName|*^&SensorDisabler&^*|1|*^&SensorDisabler&^*|2=0.0:0.0:50.0
+
+# ADD YOUR SENSOR CONFIGURATIONS BELOW:
+# --------------------------------------
