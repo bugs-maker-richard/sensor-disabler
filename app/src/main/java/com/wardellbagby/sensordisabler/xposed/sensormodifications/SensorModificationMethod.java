@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.wardellbagby.sensordisabler.util.AppFiltersKt;
 import com.wardellbagby.sensordisabler.util.Constants;
 import com.wardellbagby.sensordisabler.util.FilterType;
+import com.wardellbagby.sensordisabler.util.SensorDataFileReader;
 import com.wardellbagby.sensordisabler.util.SensorPreferencesKt;
 import com.wardellbagby.sensordisabler.util.SensorUtil;
 import com.wardellbagby.sensordisabler.util.remotepreferences.SensorDisablerPreferenceFactory;
@@ -41,9 +42,29 @@ public abstract class SensorModificationMethod {
 
   protected float[] getSensorValues(Sensor sensor, Context context) {
     XposedHelpers.setStaticBooleanField(Environment.class, "sUserRequired", false);
-    String mockValuesKey = SensorUtil.generateUniqueSensorMockValuesKey(sensor);
-
+    
     SharedPreferences sharedPreferences = getSharedPreferences(context);
+    
+    // Check if file-based data reading is enabled
+    boolean useFileData = sharedPreferences.getBoolean(Constants.PREFS_KEY_USE_FILE_DATA, false);
+    
+    if (useFileData) {
+      // Try to read from file first
+      String sensorKey = SensorUtil.generateUniqueSensorKey(sensor);
+      float[] fileValues = SensorDataFileReader.getSensorValuesFromFile(
+          context, 
+          Constants.SENSOR_DATA_FILE_NAME, 
+          sensorKey
+      );
+      
+      if (fileValues != null && fileValues.length > 0) {
+        return fileValues;
+      }
+      // If file reading fails or no data found, fall back to SharedPreferences
+    }
+    
+    // Default behavior: read from SharedPreferences
+    String mockValuesKey = SensorUtil.generateUniqueSensorMockValuesKey(sensor);
     float[] values = SensorPreferencesKt.getSensorMockedValues(sharedPreferences, mockValuesKey);
     if (values == null) {
       return new float[0];
